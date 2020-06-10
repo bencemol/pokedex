@@ -1,0 +1,9 @@
+.grid {
+  $colWidth: 300px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($colWidth, 1fr));
+  align-items: baseline;
+  justify-items: center;
+  max-width: 4 * $colWidth;
+  margin: 0 auto 10rem auto;
+}

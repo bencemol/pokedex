@@ -1,0 +1,21 @@
+<div #card class="card" [ngClass]="{'details': isSelected$ | async}" [routerLink]="['/pokedex/' + pokemon.id]"
+  tabindex="-1">
+  <div class="content">
+    <img [src]="spriteSrc" [alt]="pokemon.name">
+    <table *ngIf="details$ | async as details">
+      <tr>
+        <td>💗</td>
+        <td>{{hp | async}}</td>
+      </tr>
+      <tr>
+        <td>🔪</td>
+        <td>{{attack | async}}</td>
+      </tr>
+      <tr>
+        <td>🔰</td>
+        <td>{{defense | async}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="name">{{pokemon.name}}</div>
+</div>
