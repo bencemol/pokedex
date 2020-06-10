@@ -39,7 +39,7 @@ export class CardComponent implements OnInit {
   }
 
   get attack(): Observable<number> {
-    return this.getStat('attack')
+    return this.getStat('attack');
   }
 
   get defense(): Observable<number> {

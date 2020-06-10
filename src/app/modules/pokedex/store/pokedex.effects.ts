@@ -33,7 +33,7 @@ export class PokedexEffects {
           map(res => PokedexActions.loadPokemonDetailsOK({ details: res })),
           catchError(() => of(PokedexActions.loadPokemonDetailsERROR()))
         ))
-    )
-  })
+    );
+  });
 
 }
