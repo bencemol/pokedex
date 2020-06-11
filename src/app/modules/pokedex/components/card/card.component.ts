@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Pokemon } from '../../model/pokemon';
-import { loadPokemonDetails, selectPokemonDetails, State, isSelectedPokemon, toggleFavorite, isFavorite } from '../../store';
+import { isFavorite, isSelectedPokemon, loadPokemonDetails, selectPokemonDetails, State, toggleFavorite } from '../../store';
 
 @Component({
   selector: 'app-card',

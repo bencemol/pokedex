@@ -50,7 +50,9 @@ export const reducer = createReducer(
 
   on(PokedexActions.toggleFavorite, toggleFavoriteHandler),
 
-  on(PokedexActions.toggleShowFavorites, state => ({ ...state, showFavorites: !state.showFavorites }))
+  on(PokedexActions.toggleShowFavorites, state => ({ ...state, showFavorites: !state.showFavorites })),
+
+  on(PokedexActions.hydrateState, (state, props) => ({ ...state, ...props.state }))
 );
 
 

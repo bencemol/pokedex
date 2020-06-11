@@ -1,5 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { Pokemon } from '../model/pokemon';
+import { State } from './pokedex.reducer';
+
+export const initPokemon = createAction(
+  '[Pokedex] Init'
+);
 
 export const loadPokemon = createAction(
   '[Pokedex] Load Pokemon'
@@ -36,6 +41,11 @@ export const loadPokemonDetailsERROR = createAction(
 export const toggleFavorite = createAction(
   '[Pokedex] Toggle Favorite',
   props<{ id: number }>()
+);
+
+export const hydrateState = createAction(
+  '[Pokedex] Hydrate State',
+  props<{ state: State }>()
 );
 
 export const toggleShowFavorites = createAction(
