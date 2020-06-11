@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { filterPokemon, State } from '../../store';
+import { filterPokemon, State, toggleShowFavorites, isShowingFavorites } from '../../store';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +14,10 @@ import { filterPokemon, State } from '../../store';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   searchInputControl = new FormControl();
+  showFavoritesControl = new FormControl();
   sub = new Subscription();
+
+  isShowingFavorites$: Observable<boolean>;
 
   constructor(private store: Store<State>) { }
 
@@ -26,6 +29,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       ).subscribe(
         val => this.store.dispatch(filterPokemon({ name: val }))
       ));
+    this.sub.add(
+      this.showFavoritesControl.valueChanges.subscribe(
+        () => this.store.dispatch(toggleShowFavorites())
+      ));
+    this.isShowingFavorites$ = this.store.select(isShowingFavorites);
   }
 
   ngOnDestroy() {

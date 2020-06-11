@@ -18,4 +18,6 @@
     </table>
   </div>
   <div class="name">{{pokemon.name}}</div>
+  <button [ngClass]="{'hidden': !(isFavorite$ | async)}"
+    (click)="toggleFavorite($event)">{{(isFavorite$ | async) ?'⭐' : '⚪'}}</button>
 </div>

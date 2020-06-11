@@ -6,7 +6,9 @@ export const selectPokedexState = createFeatureSelector<fromPokedex.State>(
 );
 
 export const selectPokemon = createSelector(selectPokedexState,
-  state => state.pokemon.filter(p => p.name.includes(state.nameFilter))
+  state => state.pokemon
+    .filter(p => (state.showFavorites && state.favorites.includes(p.id)) || !state.showFavorites)
+    .filter(p => p.name.includes(state.nameFilter))
 );
 
 export const isLoading = createSelector(selectPokedexState,
@@ -20,4 +22,13 @@ export const isSelectedPokemon = createSelector(selectPokedexState,
 export const selectPokemonDetails = createSelector(selectPokedexState,
   (state: fromPokedex.State, props: { id: number }) =>
     state.details?.id === props.id ? state.details : undefined
+);
+
+export const isFavorite = createSelector(selectPokedexState,
+  (state: fromPokedex.State, props: { id: number }) =>
+    state.favorites.includes(props.id)
+);
+
+export const isShowingFavorites = createSelector(selectPokedexState,
+  state => state.showFavorites
 );

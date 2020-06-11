@@ -32,3 +32,12 @@ export const loadPokemonDetailsOK = createAction(
 export const loadPokemonDetailsERROR = createAction(
   '[Pokedex] Pokemon Details Load Error'
 );
+
+export const toggleFavorite = createAction(
+  '[Pokedex] Toggle Favorite',
+  props<{ id: number }>()
+);
+
+export const toggleShowFavorites = createAction(
+  '[Pokedex] Toggle Show Favorite'
+);

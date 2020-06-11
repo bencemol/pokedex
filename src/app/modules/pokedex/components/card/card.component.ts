@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Pokemon } from '../../model/pokemon';
-import { loadPokemonDetails, selectPokemonDetails, State, isSelectedPokemon } from '../../store';
+import { loadPokemonDetails, selectPokemonDetails, State, isSelectedPokemon, toggleFavorite, isFavorite } from '../../store';
 
 @Component({
   selector: 'app-card',
@@ -19,6 +19,7 @@ export class CardComponent implements OnInit {
 
   details$: Observable<Pokemon>;
   isSelected$: Observable<boolean>;
+  isFavorite$: Observable<boolean>;
 
   constructor(private store: Store<State>) { }
 
@@ -28,6 +29,7 @@ export class CardComponent implements OnInit {
       .pipe(
         tap(s => s ? this.card.nativeElement.focus() : null)
       );
+    this.isFavorite$ = this.store.select(isFavorite, { id: this.pokemon.id });
   }
 
   get spriteSrc(): string {
@@ -48,6 +50,11 @@ export class CardComponent implements OnInit {
 
   select() {
     this.store.dispatch(loadPokemonDetails({ id: this.pokemon.id }));
+  }
+
+  toggleFavorite($event: InputEvent) {
+    this.store.dispatch(toggleFavorite({ id: this.pokemon.id }));
+    $event.stopPropagation();
   }
 
   private getStat(statName: string): Observable<number> {

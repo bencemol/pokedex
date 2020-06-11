@@ -16,6 +16,9 @@
     .name:after {
       opacity: 1;
     }
+    button.hidden {
+      opacity: 1;
+    }
   }
 
   .name {
@@ -64,6 +67,24 @@
       td:last-of-type {
         text-align: right;
       }
+    }
+
+  }
+
+  button {
+    width: min-content;
+    height: min-content;
+    position: absolute;
+    top: .6rem;
+    right: 0;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: opacity .3s ease-out;
+
+    &.hidden {
+      opacity: 0;
     }
   }
 
