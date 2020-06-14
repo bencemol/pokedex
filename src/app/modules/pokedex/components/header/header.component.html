@@ -1,9 +1,14 @@
 <div class="spacer"></div>
 <header>
   <div class="header-container">
-    <input type="text" placeholder="🔎 by name" [formControl]="searchInputControl">
+    <input type="text" placeholder="🔎 by name" [formControl]="searchInputControl" />
     <div class="favorites">
-      <input type="checkbox" [value]="isShowingFavorites$ | async" [formControl]="showFavoritesControl" id="favorites">
+      <input
+        type="checkbox"
+        [value]="isShowingFavorites$ | async"
+        [formControl]="showFavoritesControl"
+        id="favorites"
+      />
       <label for="favorites">favorites</label>
     </div>
   </div>

@@ -1,23 +1,29 @@
-<div #card class="card" [ngClass]="{'details': isSelected$ | async}" [routerLink]="['/pokedex/' + pokemon.id]"
-  tabindex="-1">
+<div
+  #card
+  class="card"
+  [ngClass]="{ details: isSelected$ | async }"
+  [routerLink]="['/pokedex/' + pokemon.id]"
+  tabindex="-1"
+>
   <div class="content">
-    <img [src]="spriteSrc" [alt]="pokemon.name">
+    <img [src]="spriteSrc" [alt]="pokemon.name" />
     <table *ngIf="details$ | async as details">
       <tr>
         <td>💗</td>
-        <td>{{hp | async}}</td>
+        <td>{{ hp | async }}</td>
       </tr>
       <tr>
         <td>🔪</td>
-        <td>{{attack | async}}</td>
+        <td>{{ attack | async }}</td>
       </tr>
       <tr>
         <td>🔰</td>
-        <td>{{defense | async}}</td>
+        <td>{{ defense | async }}</td>
       </tr>
     </table>
   </div>
-  <div class="name">{{pokemon.name}}</div>
-  <button [ngClass]="{'hidden': !(isFavorite$ | async)}"
-    (click)="toggleFavorite($event)">{{(isFavorite$ | async) ?'⭐' : '⚪'}}</button>
+  <div class="name">{{ pokemon.name }}</div>
+  <button [ngClass]="{ hidden: !(isFavorite$ | async) }" (click)="toggleFavorite($event)">
+    {{ (isFavorite$ | async) ? '⭐' : '⚪' }}
+  </button>
 </div>

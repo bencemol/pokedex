@@ -8,12 +8,7 @@ import { loadPokemonERROR, loadPokemonOK, State, loadPokemon } from '../store';
 
 @Injectable({ providedIn: 'root' })
 export class PokemonResolver implements Resolve<Action> {
-
-  constructor(
-    private router: Router,
-    private store: Store<State>,
-    private action$: Actions
-  ) { }
+  constructor(private router: Router, private store: Store<State>, private action$: Actions) {}
 
   resolve(): Observable<Action> {
     this.store.dispatch(loadPokemon());
@@ -24,5 +19,4 @@ export class PokemonResolver implements Resolve<Action> {
     );
     return race(responseOK, responseFAIL).pipe(take(1));
   }
-
 }

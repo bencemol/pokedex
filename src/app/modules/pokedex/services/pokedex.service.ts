@@ -6,19 +6,19 @@ import { map } from 'rxjs/operators';
 import { ApiResponse } from '../model/api-response';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PokedexService {
-
   private readonly pageSize = 150;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getPokemon(): Observable<Pokemon[]> {
-    return this.http.get<ApiResponse<Pokemon>>(`/pokemon?limit=${this.pageSize}`)
-      .pipe(map(res => res.results.map(
-        pokemon => ({ id: Number(pokemon.url.match(/\d+(?=\/$)/)[0]), ...pokemon })
-      )));
+    return this.http
+      .get<ApiResponse<Pokemon>>(`/pokemon?limit=${this.pageSize}`)
+      .pipe(
+        map((res) => res.results.map((pokemon) => ({ id: Number(pokemon.url.match(/\d+(?=\/$)/)[0]), ...pokemon })))
+      );
   }
 
   getPokemonDetails(id: number): Observable<Pokemon> {

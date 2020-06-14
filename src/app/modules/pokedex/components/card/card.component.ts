@@ -4,16 +4,22 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Pokemon } from '../../model/pokemon';
-import { isFavorite, isSelectedPokemon, loadPokemonDetails, selectPokemonDetails, State, toggleFavorite } from '../../store';
+import {
+  isFavorite,
+  isSelectedPokemon,
+  loadPokemonDetails,
+  selectPokemonDetails,
+  State,
+  toggleFavorite,
+} from '../../store';
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent implements OnInit {
-
   @ViewChild('card', { static: true }) card: ElementRef;
   @Input() pokemon: Pokemon;
 
@@ -21,14 +27,13 @@ export class CardComponent implements OnInit {
   isSelected$: Observable<boolean>;
   isFavorite$: Observable<boolean>;
 
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
     this.details$ = this.store.select(selectPokemonDetails, { id: this.pokemon.id });
-    this.isSelected$ = this.store.select(isSelectedPokemon, { id: this.pokemon.id })
-      .pipe(
-        tap(s => s ? this.card.nativeElement.focus() : null)
-      );
+    this.isSelected$ = this.store
+      .select(isSelectedPokemon, { id: this.pokemon.id })
+      .pipe(tap((s) => (s ? this.card.nativeElement.focus() : null)));
     this.isFavorite$ = this.store.select(isFavorite, { id: this.pokemon.id });
   }
 
@@ -58,9 +63,6 @@ export class CardComponent implements OnInit {
   }
 
   private getStat(statName: string): Observable<number> {
-    return this.details$.pipe(
-      map(p => p?.stats.find(s => s.stat.name === statName).base_stat)
-    );
+    return this.details$.pipe(map((p) => p?.stats.find((s) => s.stat.name === statName).base_stat));
   }
-
 }

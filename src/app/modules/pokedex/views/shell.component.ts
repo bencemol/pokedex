@@ -5,6 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     <app-header></app-header>
     <router-outlet></router-outlet>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShellComponent { }
+export class ShellComponent {}

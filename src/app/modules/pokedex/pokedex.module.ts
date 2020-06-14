@@ -11,21 +11,14 @@ import { pokedexFeatureKey, reducer } from './store';
 import { PokedexEffects } from './store/pokedex.effects';
 import { ShellComponent } from './views/shell.component';
 
-
-
 @NgModule({
-  declarations: [
-    ShellComponent,
-    PokedexComponent,
-    HeaderComponent,
-    CardComponent
-  ],
+  declarations: [ShellComponent, PokedexComponent, HeaderComponent, CardComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     PokedexRoutingModule,
     EffectsModule.forFeature([PokedexEffects]),
-    StoreModule.forFeature(pokedexFeatureKey, reducer)
-  ]
+    StoreModule.forFeature(pokedexFeatureKey, reducer),
+  ],
 })
-export class PokedexModule { }
+export class PokedexModule {}

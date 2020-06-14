@@ -8,16 +8,14 @@ import { Pokemon } from '../../model/pokemon';
   selector: 'app-pokedex',
   templateUrl: './pokedex.component.html',
   styleUrls: ['./pokedex.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokedexComponent implements OnInit {
-
   pokemon$: Observable<Pokemon[]>;
 
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
     this.pokemon$ = this.store.select(selectPokemon);
   }
-
 }

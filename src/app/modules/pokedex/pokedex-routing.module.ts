@@ -14,24 +14,24 @@ const routes: Routes = [
         path: '',
         component: PokedexComponent,
         resolve: {
-          pokemon: PokemonResolver
+          pokemon: PokemonResolver,
         },
         children: [
           {
             path: ':id',
             component: PokedexComponent,
             resolve: {
-              pokemon: PokemonDetailsResolver
-            }
-          }
-        ]
-      }
-    ]
-  }
+              pokemon: PokemonDetailsResolver,
+            },
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PokedexRoutingModule { }
+export class PokedexRoutingModule {}

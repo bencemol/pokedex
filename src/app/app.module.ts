@@ -11,35 +11,28 @@ import { BaseUrlInterceptor } from './services/base-url.interceptor';
 import { metaReducers, reducers } from './store';
 import { ErrorComponent } from './views/error/error.component';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    ErrorComponent
-  ],
+  declarations: [AppComponent, ErrorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     EffectsModule.forRoot([]),
-    StoreModule.forRoot(
-      reducers,
-      { metaReducers }
-    ),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [
     {
       provide: 'apiBaseUrl',
-      useValue: environment.apiBaseUrl
+      useValue: environment.apiBaseUrl,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BaseUrlInterceptor,
       deps: ['apiBaseUrl'],
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
