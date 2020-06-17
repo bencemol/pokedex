@@ -3,22 +3,25 @@
   class="card"
   [ngClass]="{ details: isSelected$ | async }"
   [routerLink]="['/pokedex/' + pokemon.id]"
+  (deferLoad)="renderImg = true"
+  (unLoad)="renderImg = false"
   tabindex="-1"
 >
   <div class="content">
-    <img [src]="spriteSrc" [alt]="pokemon.name" />
+    <img [src]="spriteSrc" [alt]="pokemon.name" *ngIf="renderImg" />
+    <img class="loading" src="assets/img/loading-0.png" alt="loading..." *ngIf="!renderImg" />
     <table *ngIf="details$ | async as details">
       <tr>
         <td>💗</td>
-        <td>{{ hp | async }}</td>
+        <td>{{ details | pokeStat: 'hp' }}</td>
       </tr>
       <tr>
         <td>🔪</td>
-        <td>{{ attack | async }}</td>
+        <td>{{ details | pokeStat: 'attack' }}</td>
       </tr>
       <tr>
         <td>🔰</td>
-        <td>{{ defense | async }}</td>
+        <td>{{ details | pokeStat: 'defense' }}</td>
       </tr>
     </table>
   </div>

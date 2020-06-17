@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { delay, tap, withLatestFrom, filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Pokemon } from '../../model/pokemon';
 import {
   isFavorite,
   isSelectedPokemon,
+  isShowingFavorites,
   loadPokemonDetails,
   selectPokemonDetails,
   State,
@@ -23,6 +24,8 @@ export class CardComponent implements OnInit {
   @ViewChild('card', { static: true }) card: ElementRef;
   @Input() pokemon: Pokemon;
 
+  renderImg = false;
+
   details$: Observable<Pokemon>;
   isSelected$: Observable<boolean>;
   isFavorite$: Observable<boolean>;
@@ -30,27 +33,36 @@ export class CardComponent implements OnInit {
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
+    this.initSelectors();
+    this.setFocusOnShowFavorites();
+  }
+
+  private initSelectors() {
     this.details$ = this.store.select(selectPokemonDetails, { id: this.pokemon.id });
     this.isSelected$ = this.store
       .select(isSelectedPokemon, { id: this.pokemon.id })
-      .pipe(tap((s) => (s ? this.card.nativeElement.focus() : null)));
+      .pipe(tap((s) => this.focusOnSelected(s)));
     this.isFavorite$ = this.store.select(isFavorite, { id: this.pokemon.id });
+  }
+
+  private focusOnSelected(isSelected: boolean) {
+    if (isSelected) {
+      setTimeout(() => this.card.nativeElement.focus(), 0);
+    }
+  }
+
+  private setFocusOnShowFavorites() {
+    this.store
+      .select(isShowingFavorites)
+      .pipe(
+        filter((f) => f === false),
+        withLatestFrom(this.isSelected$)
+      )
+      .subscribe(([_, isSelected]) => this.focusOnSelected(isSelected));
   }
 
   get spriteSrc(): string {
     return `${environment.spriteApiBaseUrl}/${this.pokemon.name}.gif`;
-  }
-
-  get hp(): Observable<number> {
-    return this.getStat('hp');
-  }
-
-  get attack(): Observable<number> {
-    return this.getStat('attack');
-  }
-
-  get defense(): Observable<number> {
-    return this.getStat('defense');
   }
 
   select() {
@@ -60,9 +72,5 @@ export class CardComponent implements OnInit {
   toggleFavorite($event: InputEvent) {
     this.store.dispatch(toggleFavorite({ id: this.pokemon.id }));
     $event.stopPropagation();
-  }
-
-  private getStat(statName: string): Observable<number> {
-    return this.details$.pipe(map((p) => p?.stats.find((s) => s.stat.name === statName).base_stat));
   }
 }

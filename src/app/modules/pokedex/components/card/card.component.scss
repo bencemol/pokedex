@@ -1,6 +1,7 @@
 .card {
   width: 150px;
   height: 150px;
+  max-height: 150px;
   margin-top: 50px;
   border-radius: 10px;
   display: flex;
@@ -46,12 +47,17 @@
     position: relative;
     display: flex;
     align-items: flex-end;
+    height: 100%;
 
     img {
       margin: 0 auto;
       max-height: 105px;
       height: initial;
       transition: transform 0.2s ease-out;
+    }
+
+    img.loading {
+      animation: fadeIn 0.6s ease-out infinite alternate;
     }
 
     table {

@@ -10,9 +10,11 @@ import { PokedexRoutingModule } from './pokedex-routing.module';
 import { pokedexFeatureKey, reducer } from './store';
 import { PokedexEffects } from './store/pokedex.effects';
 import { ShellComponent } from './views/shell.component';
+import { PokeStatPipe } from './pipes/poke-stat.pipe';
+import { DeferLoadDirective } from './directives/defer-load.directive';
 
 @NgModule({
-  declarations: [ShellComponent, PokedexComponent, HeaderComponent, CardComponent],
+  declarations: [ShellComponent, PokedexComponent, HeaderComponent, CardComponent, PokeStatPipe, DeferLoadDirective],
   imports: [
     CommonModule,
     ReactiveFormsModule,
