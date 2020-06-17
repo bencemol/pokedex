@@ -4,12 +4,11 @@
   [ngClass]="{ details: isSelected$ | async }"
   [routerLink]="['/pokedex/' + pokemon.id]"
   (deferLoad)="renderImg = true"
-  (unLoad)="renderImg = false"
   tabindex="-1"
 >
   <div class="content">
-    <img [src]="spriteSrc" [alt]="pokemon.name" *ngIf="renderImg" />
-    <img class="loading" src="assets/img/loading-0.png" alt="loading..." *ngIf="!renderImg" />
+    <img [src]="spriteSrc" [alt]="pokemon.name" *ngIf="renderImg" [hidden]="loadingImg" (load)="loadingImg = false" />
+    <img class="loading" src="assets/img/loading-0.png" alt="loading..." [hidden]="!loadingImg" />
     <table *ngIf="details$ | async as details">
       <tr>
         <td>💗</td>

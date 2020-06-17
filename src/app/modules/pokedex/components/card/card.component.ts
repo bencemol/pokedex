@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { delay, tap, withLatestFrom, filter } from 'rxjs/operators';
+import { filter, tap, withLatestFrom } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Pokemon } from '../../model/pokemon';
 import {
@@ -25,6 +25,7 @@ export class CardComponent implements OnInit {
   @Input() pokemon: Pokemon;
 
   renderImg = false;
+  loadingImg = true;
 
   details$: Observable<Pokemon>;
   isSelected$: Observable<boolean>;
