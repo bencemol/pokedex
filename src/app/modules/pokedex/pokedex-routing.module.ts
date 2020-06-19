@@ -1,9 +1,9 @@
-import { Routes, RouterModule } from '@angular/router';
-import { PokedexComponent } from './components/pokedex/pokedex.component';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PokedexComponent } from './components/pokedex/pokedex.component';
+import { PokemonDetailsResolver } from './services/pokemon-details-resolver.service';
 import { PokemonResolver } from './services/pokemon-resolver.service';
 import { ShellComponent } from './views/shell.component';
-import { PokemonDetailsResolver } from './services/pokemon-details-resolver.service';
 
 const routes: Routes = [
   {

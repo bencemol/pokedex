@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiBaseUrl: '/api',
-  spriteApiBaseUrl: 'https://img.pokemondb.net/sprites/black-white/anim/normal/'
+  spriteApiBaseUrl: 'https://img.pokemondb.net/sprites/black-white/anim/normal',
 };
 
 /*
