@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter, tap, withLatestFrom } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Pokemon } from '../../model/pokemon';
@@ -20,12 +20,14 @@ import {
   styleUrls: ['./card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnDestroy {
   @ViewChild('card', { static: true }) card: ElementRef;
   @Input() pokemon: Pokemon;
 
   renderImg = false;
   loadingImg = true;
+
+  subSink = new Subscription();
 
   details$: Observable<Pokemon>;
   isSelected$: Observable<boolean>;
@@ -33,9 +35,13 @@ export class CardComponent implements OnInit {
 
   constructor(private store: Store<State>) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.initSelectors();
     this.setFocusOnShowFavorites();
+  }
+
+  ngOnDestroy() {
+    this.subSink.unsubscribe();
   }
 
   private initSelectors() {
@@ -53,13 +59,15 @@ export class CardComponent implements OnInit {
   }
 
   private setFocusOnShowFavorites() {
-    this.store
-      .select(isShowingFavorites)
-      .pipe(
-        filter((f) => f === false),
-        withLatestFrom(this.isSelected$)
-      )
-      .subscribe(([_, isSelected]) => this.focusOnSelected(isSelected));
+    this.subSink.add(
+      this.store
+        .select(isShowingFavorites)
+        .pipe(
+          filter((f) => f === false),
+          withLatestFrom(this.isSelected$)
+        )
+        .subscribe(([_, isSelected]) => this.focusOnSelected(isSelected))
+    );
   }
 
   get spriteSrc(): string {
