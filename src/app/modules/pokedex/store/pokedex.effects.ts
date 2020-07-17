@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { PokedexService } from '../services/pokedex.service';
 import * as PokedexActions from './pokedex.actions';
 import { pokedexFeatureKey, State } from './pokedex.reducer';
@@ -31,7 +31,7 @@ export class PokedexEffects implements OnInitEffects {
   loadPokemonDetails$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(PokedexActions.loadPokemonDetails),
-      mergeMap((props) =>
+      switchMap((props) =>
         this.pokedexService.getPokemonDetails(props.id).pipe(
           map((res) => PokedexActions.loadPokemonDetailsOK({ details: res })),
           catchError(() => of(PokedexActions.loadPokemonDetailsERROR()))
